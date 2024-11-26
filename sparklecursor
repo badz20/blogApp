@@ -1,0 +1,53 @@
+.sparkle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: gold;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  /* Star shape */
+  opacity: 0;
+  animation: sparkleAnimation 1s forwards;
+  pointer-events: none;
+  z-index: 1000 !important;
+}
+
+@keyframes sparkleAnimation {
+  0% {
+    transform: scale(1) translate(-50%, -50%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+
+
+// Function to create a sparkle at the given x and y coordinates
+function createSparkle(x, y) {
+  const sparkle = document.createElement('div');
+  sparkle.classList.add('sparkle');
+  sparkle.style.left = `${x}px`;
+  sparkle.style.top = `${y}px`;
+
+  // Append the sparkle to the body
+  document.body.appendChild(sparkle);
+
+  // Remove sparkle after animation ends
+  setTimeout(() => {
+    sparkle.remove();
+  }, 1000); // Duration matches the animation length
+}
+
+// Event listeners for both mousemove and touchmove events
+document.addEventListener('mousemove', (e) => {
+  createSparkle(e.pageX, e.pageY);
+});
+
+document.addEventListener('touchmove', (e) => {
+  const touch = e.touches[0];
+  createSparkle(touch.pageX, touch.pageY);
+});
+
